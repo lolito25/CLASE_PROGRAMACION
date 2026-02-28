@@ -41,7 +41,7 @@ const checkRole = (...allowedRoles) => {
         if (!req.userRole) {
             return res.status(401).json({
                 success:false,
-                message: 'No se pudo verificar el rol del usuario. Asegúrate de que el token sea correcto y que el middleware de autenticación se haya ejecutado.'
+                message: 'token invalido'
 
             });
         }
@@ -49,11 +49,35 @@ const checkRole = (...allowedRoles) => {
         if (!allowedRoles.includes(req.userRole)) {
             return res.status(403).json({
                 success:false,
-                message: 'No tienes permisos para acceder a esta ruta.'
+                message: `Prermisos insuficientes se requiere ${allowedRoles.join(" o ")}`
             });
         }
         next(); //continuar con la ejecución de la ruta si el rol es válido
-    }
+   }  
 };
 
+//funciones helper para roles especificos
+//verifica que el usuario es admin
+//uso: router.delete('/admin-only'. verifyToken, isAdmin, controller.method)
 
+const isAdmin = (req, res, next) =>{
+    return checkRole('admin')(req,res,next)
+};
+
+//verificar si el usuario es coordinador
+const isCoordinador = (req,res,next) =>{
+    return checkRole('coordinador')(req,res,next)
+}
+
+//verificar si el usuario es auxiliar
+const isAuxiliar = (req,res,next) =>{
+    return checkRole('auxiliar')(req,res,next)
+}
+
+//modulo a exportar
+module.exports = {
+    checkRole,
+    isAdmin,
+    isCoordinador,
+    isAuxiliar
+}
