@@ -1,0 +1,39 @@
+/*
+post /api/user
+get /api/users
+get /api/users/:id
+delete /api/users/:id
+
+*/
+
+const expres = require('express');
+const router = expres.Router();
+const userController = require ('../controllers/userController');
+const {verifyToken} = require('../middleswares/authJwt');
+const  {checkRole} = require('../middleswares/role');
+
+router.use((req , res , next) => {
+    console.log(' Diagnostifo Fr ruta ===');
+    console.log (`[${new Date().toISOString()}] ${req.methop} $req.originalUrl}`);
+    console.log ('Headers: ',{
+        'Authorization': req.headers.Authorization ? '***' + req.headers.Authorization.slice(8): null ,
+        'x-access-token': req.headers['x-access-token'] ? '***' + req.headers['x-access-token'].slice(8): null ,
+    });
+    next();
+})
+
+// rutas de usuarios
+
+// crear nuevo usuario (solo admin)
+router.post('/', verifyToken, checkRole(['admin']), userController.createUser);
+
+// listar todos los usuarios
+router.get('/' , verifyToken, checkRole(['admin','Coordinador', 'Auxiliar']), userController.getAllUsers);
+
+//obtener un usuario por id 
+router.get('/:id', verifyToken, checkRole(['admin','coordinador', 'Auxiliar']), userController.getUserById);
+
+//eliminar o desactivar un usuario por id (solo admin)
+router.delete('/:id', verifyToken,checkRole(['admin']),userController.deleteUser);
+
+module.exports = router;
