@@ -11,7 +11,7 @@ Delete /api/subcategories/:id elimina o desactiva una subcategoria por id
 */
 
 const express = require('express');
-const router = express.Router('');
+const router = express.Router();
 const subcategoryController = require('../controllers/subcategoryController');
 const {verifyToken} = require('../middleswares/authJwt');
 const {checkRole} = require('../middleswares/role');
@@ -25,11 +25,11 @@ const validateSubcategory = [
 ]
 
 
-router.post('/', verifyToken, checkRole(['admin','coordinador']), validateSubcategory, subcategoryController.createSubcategory);
+router.post('/', verifyToken, checkRole('admin','coordinador'), subcategoryController.createSubcategory);
 router.get('/', subcategoryController.getSubcategories);
 router.get('/:id', subcategoryController.getSubcategoryById);
-router.put('/:id', verifyToken, checkRole(['admin','coordinador']), validateSubcategory, subcategoryController.updateSubcategory);
-router.delete('/:id', verifyToken, checkRole(['admin']), subcategoryController.deleteSubcategory);
+//router.put('/:id', verifyToken, checkRole('admin','coordinador'), subcategoryController.updateSubcategory);
+router.delete('/:id', verifyToken, checkRole('admin'), subcategoryController.deleteCategory);
 
 // --- rutas de productos ----------------------------------------------------
 const productController = require('../controllers/productController');
@@ -48,11 +48,11 @@ const validateProduct = [
 // endpoints para productos (se montan en /api/subcategories/...) 
 // según convención podrían utilizarse rutas generales como /products pero las dejamos aquí
 
-router.post('/products', verifyToken, checkRole(['admin','coordinador']), validateProduct, productController.createProduct);
+router.post('/products', verifyToken, checkRole('admin','coordinador'), productController.createProduct);
 router.get('/products', productController.getProducts);
 router.get('/products/:id', productController.getProductById);
-router.put('/products/:id', verifyToken, checkRole(['admin','coordinador']), validateProduct, productController.updateProduct);
-router.delete('/products/:id', verifyToken, checkRole(['admin']), productController.deleteProduct);
+router.put('/products/:id', verifyToken, checkRole('admin','coordinador'), productController.updateProduct);
+router.delete('/products/:id', verifyToken, checkRole('admin'), productController.deleteProduct);
 
 // obtener productos que pertenecen a una subcategoria especifica
 router.get('/:id/products', async (req, res) => {

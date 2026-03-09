@@ -174,7 +174,7 @@ exports.updateSubcategory = async (req, res) => {
         res.status(200).json({
             success: true,
             message: 'subcategoria actualizada exitozamente',
-            data: updateCategory
+            data: updateSubcategory
         });
     } catch (error){
         console.error('Error en actualizar subcategoria', error);

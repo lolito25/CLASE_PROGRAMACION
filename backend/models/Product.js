@@ -12,7 +12,7 @@ const mongoose =require('mongoose');
 
     //campos de la tabla producto
     
-const productSchema = new moongoose.Schema({
+const productSchema = new mongoose.Schema({
     //nombre del producto unico y requerido
     name:{
         type: String,
@@ -23,26 +23,26 @@ const productSchema = new moongoose.Schema({
     
     //Descripcion del producto - requerida
     description: {
-            type: String,
-            require: [true, 'La descripcion es requerida'],
-            trim: true
+        type: String,
+        require: [true, 'La descripcion es requerida'],
+        trim: true
     },
     
     
     //Precio en unidades monetarias
     //No puede ser negativo
     price: {
-            type: Number,
-            require: [true, 'El precio es obligatorio'],
-            min:[0, 'El precio no puede ser negativo']
+        type: Number,
+        require: [true, 'El precio es obligatorio'],
+        min:[0, 'El precio no puede ser negativo']
     },
 
     // cantidad de stock
     //no puede ser negativo
     stock: {
-            type: Number,
-            require: [true, 'El stock es obligatorio'],
-            min:[0, 'El stock no puede ser negativo']
+        type: Number,
+        require: [true, 'El stock es obligatorio'],
+        min:[0, 'El stock no puede ser negativo']
     },
 
     //Categoria padre, esta producto pertenece a una categoria 
@@ -114,4 +114,5 @@ productSchema.post('save', function(error, doc, next) {
  */
 
 //exportar el modelo
-module.exports = moongose.model('Product', productSchema);
+module.exports = mongoose.model('Product', productSchema);
+

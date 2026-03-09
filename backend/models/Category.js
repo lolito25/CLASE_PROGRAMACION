@@ -7,7 +7,7 @@ const mongoose =require('mongoose');
 
 //Campos de categoria
 
-const categorySchema = new moongoose.Schema({
+const categorySchema = new mongoose.Schema({
     //nombre de la categoria unico y requerido
     name:{
         type: String,
@@ -85,4 +85,4 @@ categorySchema.index({name: 1},{
 });
 
 //exportar el modelo
-module.exports = moongose.model('Category', categorySchema);
+module.exports = mongoose.model('Category', categorySchema);

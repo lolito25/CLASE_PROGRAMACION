@@ -15,15 +15,15 @@ las variables de entorno tienen prioridad  sobre los valores por defecto
 
 module.exports = {
     // configuracion de JWT
-    SECRET : proccess.env.JWT_SECRET || "tusecretoparalostokens",
-    TOKEN_EXPIRATION: proccess.env.JWT_EXPIRATION || '24h',
+    SECRET : process.env.JWT_SECRET || "tusecretoparalostokens",
+    TOKEN_EXPIRATION: process.env.JWT_EXPIRATION || '24h',
 
     //configuracion de conexion a MongoDB
     DB : {
-        URL : proccess.env.MONGODB_URL || "mongodb://Localhost:27017/nombre_mi_bd" ,
+        URL : process.env.MONGO_URI || "mongodb://localhost:27017/crud-mongo" ,
         OPTIONS : {
             useNewURLParser : true,
-            userUnifiedTopology: true,
+            useUnifiedTopology: true,
         }
     },
 

@@ -125,7 +125,7 @@ exports.createProduct = async (req, res) => {
                 .sort({ createdAt: -1});
 
                 // si el usuario es auxiliar, no mostrar informacion de quien lo creo
-                if (req.user && req.user.role === 'auxiliar'){
+                if (req.use && req.user.role === 'auxiliar'){
                     //Ocultar campo createdBy para usuarios auxiliares
 
                     products.forEach(product => {

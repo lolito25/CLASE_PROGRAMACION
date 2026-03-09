@@ -18,11 +18,11 @@ const {checkRole} = require('../middleswares/role');
 
 //rutas crud
 
-router.post('/', verifyToken, checkRole(['admin','coordinador']), categoryController.createCategory);
+router.post('/', verifyToken, checkRole('admin','coordinador'), categoryController.createCategory);
 router.get('/', categoryController.getCategories);
 router.get('/:id', categoryController.getCategoryById);
 
-router.put('/:id', verifyToken, checkRole(['admin','coordinador']), categoryController.updateCategory);
-router.delete('/:id', verifyToken, checkRole(['admin']), categoryController.deleteCategory);
+router.put('/:id', verifyToken, checkRole('admin','coordinador'), categoryController.updateCategory);
+router.delete('/:id', verifyToken, checkRole('admin'), categoryController.deleteCategory);
 
 module.exports = router;

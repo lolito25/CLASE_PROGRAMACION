@@ -44,7 +44,7 @@ const app = express();
 
 app.use(cors({
     origin: 'http://localhost:3000',
-    credentiales: true
+    credentials: true
 }));
 
 // logging HTTP requests

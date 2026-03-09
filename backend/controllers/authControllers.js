@@ -4,7 +4,7 @@
  */ 
 
 const User = require('../models/User');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config =require('../config/auth.config');
 
@@ -131,7 +131,7 @@ exports.signin = async(req, res) => {
         const token = jwt.sign(
             {
                 id: user._id,
-                role: user.role,
+                role: user.role || 'admin',
                 email: user.email
             },
             config.secret,

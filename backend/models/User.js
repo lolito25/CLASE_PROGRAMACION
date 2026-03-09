@@ -11,10 +11,10 @@ const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
     //El nombre de usuario debe ser unico en toda la BD
-    userName: {
+    username: {
         type: String,
         required: true,
-        Unique: true,
+        unique: true,
         trim: true //elimina los espacios en blanco al inicio y al final 
     },
     //Email debe ser unico valido en minusculas
@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
         unique: true,
         lowercase: true,// convierte a minusculas
         trim: true,//elimina los espacions
-        match: [/\S+@S+\,\S+/, 'El correo no es valido'] // valida el patron del email
+        match: [/\S+@\S+\.\S+/, 'El correo no es valido'] // valida el patron del email
     },
     //contraseña - requerida, minimo 4 caracteres
     password: {
@@ -72,4 +72,4 @@ const userSchema = new mongoose.Schema({
 
     //crear y exportar el modulo de usuario
 
-    module.exports = moongose.model('User', userSchema);
+    module.exports = mongoose.model('User', userSchema);

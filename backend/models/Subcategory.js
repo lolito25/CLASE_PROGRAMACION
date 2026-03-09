@@ -10,7 +10,7 @@ const mongoose =require('mongoose');
 
 //Campos de subcategoria
 
-const subcategorySchema = new moongoose.Schema({
+const subcategorySchema = new mongoose.Schema({
     //nombre de la subcategoria unico y requerido
     name:{
         type: String,
@@ -77,4 +77,4 @@ subcategorySchema.post('save', function(error, doc, next) {
  */
 
 //exportar el modelo
-module.exports = moongose.model('Subcategory', subcategorySchema);
+module.exports = mongoose.model('Subcategory', subcategorySchema);
