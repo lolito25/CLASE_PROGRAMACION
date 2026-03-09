@@ -28,7 +28,7 @@ const validateSubcategory = [
 router.post('/', verifyToken, checkRole('admin','coordinador'), subcategoryController.createSubcategory);
 router.get('/', subcategoryController.getSubcategories);
 router.get('/:id', subcategoryController.getSubcategoryById);
-//router.put('/:id', verifyToken, checkRole('admin','coordinador'), subcategoryController.updateSubcategory);
+router.put('/:id', verifyToken, checkRole('admin','coordinador'), subcategoryController.updateSubcategory);
 router.delete('/:id', verifyToken, checkRole('admin'), subcategoryController.deleteCategory);
 
 // --- rutas de productos ----------------------------------------------------

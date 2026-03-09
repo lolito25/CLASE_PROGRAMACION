@@ -61,13 +61,13 @@ router.get('/:id',
 
 router.put('/:id',
     verifyToken,
-    checkRole(['admin','coordinador']),
+    checkRole('admin','coordinador'),
     validateProduct,
     productController.updateProduct
 );
 router.delete('/:id',
     verifyToken,
-    checkRole(['admin']),
+    checkRole('admin'),
     productController.deleteProduct
 );
 

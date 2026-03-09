@@ -36,7 +36,7 @@ exports.createProduct = async (req, res) => {
         }
 
         //validar que la categoria existe
-        const categoryExist = await Category.finById(category);
+        const categoryExist = await Category.findById(category);
         if(!categoryExist){
             return res.status(404).json({
                 success: false,
@@ -49,7 +49,7 @@ exports.createProduct = async (req, res) => {
             _id: subcategory,
             category: category
         });
-        if (subcategoryExist){
+        if (!subcategoryExist){
             return res.status(400).json({
                 success: false,
                 message: 'la subcategoria no existe o no pertenece a la categoria especificada'
@@ -74,7 +74,7 @@ exports.createProduct = async (req, res) => {
             const savedProduct = await product.save();
 
             //obtener producto poblado con datos de relaciones (populate)
-            const productWithDetails = await Product.finById(savedProduct._id)
+            const productWithDetails = await Product.findById(savedProduct._id)
                 .populate('category', 'name')
                 .populate('subcategory', 'name')
                 .populate('createdBy', 'username email');
@@ -156,9 +156,9 @@ exports.createProduct = async (req, res) => {
      */
     exports.getProductById = async (req, res) => {
         try{
-            const product = await Product.finById(req.params.id)
-                populate('category', 'name description')
-                populate('subcategory', 'name description');
+            const product = await Product.findById(req.params.id)
+                .populate('category', 'name description')
+                .populate('subcategory', 'name description');
 
                 if(!product) {
                     return res.status(404).json({
@@ -213,7 +213,7 @@ exports.createProduct = async (req, res) => {
             //validar relaciones si se actualizan
             if(category || subcategory ){
                 if(category) {
-                    const categoryExist = await Category.finById(category);
+                    const categoryExist = await Category.findById(category);
                     if(!categoryExist) {
                         return res.status(404).json({
                             success: false,
@@ -253,7 +253,7 @@ exports.createProduct = async (req, res) => {
            res.status(200).json({
             success: true,
             message: 'Producto actualizado correctamente',
-            data: updatedProduct
+            data: updateProduct
         });
 
     } catch (error) { // <-- CORRECCIÓN: Aquí está el catch que faltaba
@@ -281,7 +281,7 @@ exports.createProduct = async (req, res) => {
     exports.deleteProduct = async (req, res ) => {
         try{
             const isHardDelete = req.query.isHardDelete === 'true';
-            const product = await Product.finById(req.params.id);
+            const product = await Product.findById(req.params.id);
 
             if(!product){
                 return res.status(404).json({
@@ -292,7 +292,7 @@ exports.createProduct = async (req, res) => {
 
             if (isHardDelete) {
                 //======== HARD DELETE: Eliminar permanentemente de la BD =======
-                await Product.finByIdAndDelete(req.params.id);
+                await Product.findByIdAndDelete(req.params.id);
                 res.status(200).json({
                     success: true,
                     message: 'Producto eliminado permanentemente de la base de datos',

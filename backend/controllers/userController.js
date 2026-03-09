@@ -77,7 +77,7 @@ exports.getAllUsers = async (req, res) => {
 exports.getUserById = async (req, res) => {
     try {
         // por defecto solo mostrar usuarios activos
-        const user = await user.findById(req.params.id).select('-password');
+        const user = await User.findById(req.params.id).select('-password');
 
         if (!user) {
             return res.status(404).json({
@@ -96,7 +96,7 @@ exports.getUserById = async (req, res) => {
         }
 
         //los coordinadores no pueden ver administradores
-        if (req.userRole === 'coordinador' && role === 'admin') {
+        if (req.userRole === 'coordinador' && user.role === 'admin') {
             return res.status(403).json({
                 success: false,
                 message: 'no puedes ver usuarios admin'
@@ -136,7 +136,8 @@ exports.createUser = async (req, res) => {
         const { username, email, password, role } = req.body;
 
         //crear usuario nuevo
-        const user = new user({
+        // use a different variable name to avoid shadowing the User model
+        const newUser = new User({
             username,
             email,
             password,
@@ -144,7 +145,7 @@ exports.createUser = async (req, res) => {
         });
 
         //guardar en bd
-        const savedUser = await user.save();
+        const savedUser = await newUser.save();
 
         res.status(201).json({
             success: true,
@@ -157,7 +158,7 @@ exports.createUser = async (req, res) => {
         });
 
     } catch (error) {
-        console.error('Error en createUuser:', error);
+        console.error('Error en createUser:', error);
         res.status(500).json({
             success: false,
             message: 'error al crear usuario',

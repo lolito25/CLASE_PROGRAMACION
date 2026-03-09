@@ -102,7 +102,7 @@ exports.getSubcategoryById =async (req, res) => {
         try{
     //por defecto solo las categorias activas
     //IncludeInactive=true permite ver desactivadas
-    const subcategory = await Subcategory.findById(req,params.id).populate('category', 'name');
+    const subcategory = await Subcategory.findById(req.params.id).populate('category', 'name');
     if (!subcategory) {
         return res.status(404).json({
             success: false,
