@@ -21,7 +21,7 @@ const config =require('../config/auth.config');
 exports.signup = async (req, res) => {
     try{
         //crear nuevo usuario
-        const user = new user({
+        const user = new User({
             username: req.body.username,
             email: req.body.email,
             password: req.body.password,
@@ -53,7 +53,7 @@ exports.signup = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            message: 'Usuario no registrado correctamente',
+            message: 'Usuario registrado correctamente',
             token: token,
             user: UserResponse
         });
